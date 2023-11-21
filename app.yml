@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: icecream-app
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: icecream
+  template:
+    metadata:
+      labels:
+        app: icecream
+    spec:
+      containers:
+      - name: icecream-app
+        image: maucarranco/apipython:apipython
+        ports:
+        - containerPort: 3000
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: icecream-app-service
+spec:
+  selector:
+    app: icecream
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
+
